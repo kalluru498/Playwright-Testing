@@ -28,3 +28,28 @@ test('test demo', async ({ page }) => {
   await page.getByRole('link', { name: 'API' }).click();
   await page.getByRole('heading', { name: 'Playwright Library' }).click();
 });
+
+test('api reference accessible', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  
+  // Find and click API link
+  await page.getByRole('link', { name: 'API' }).click();
+  
+  // Verify API page loads
+  await expect(page.getByRole('heading', { name: /Playwright Library|API/ })).toBeVisible();
+});
+
+test('page has main features section', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  
+  // Check for key feature headings
+  await expect(page.getByText(/cross-browser|all browsers/i)).toBeVisible({ timeout: 5000 });
+});
+
+test('github link present', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  
+  // Look for GitHub link in header/footer
+  const githubLink = page.getByRole('link', { name: /github/i }).first();
+  await expect(githubLink).toBeVisible();
+});
